@@ -58,10 +58,6 @@ module "alb" {
     ex-http = {
       port     = 80
       protocol = "HTTP"
-      forward = {
-        port        = "80"
-        protocol    = "HTTP"
-      }
     }
   }
 
