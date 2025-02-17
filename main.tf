@@ -59,18 +59,8 @@ module "blog_alb" {
       port     = 80
       protocol = "HTTP"
       forward = {
-        target_groups = "ex-alb"
+        target_group_arn = module.blog.autoscaling_group_arn
       }
-    }
-  }
-
-  target_groups = {
-    ex-alb = {
-      name_prefix = "blog-"
-      protocol = "HTTP"
-      port = 80
-      target_type = "alb"
-      target_id = module.blog.autoscaling_group_id
     }
   }
 
@@ -78,6 +68,7 @@ module "blog_alb" {
     Environment = "dev"
   }
 }
+
 
 module "blog_sg" {
   source  = "terraform-aws-modules/security-group/aws"
