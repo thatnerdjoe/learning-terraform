@@ -73,8 +73,8 @@ module "blog_alb" {
       name_prefix      = "blog-"
       protocol         = "HTTP"
       port             = 80
-      target_type      = "instance"
-      target_id        = aws_instance.blog.id
+      target_type      = "arn"
+      target_id        = module.blog.autoscaling_group_arn
     }
   }
 
