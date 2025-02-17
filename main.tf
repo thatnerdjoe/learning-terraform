@@ -64,6 +64,7 @@ module "blog_alb" {
     ex-http = {
       port     = 80
       protocol = "HTTP"
+
       forward = {
         target_group_key = "ex-asg"
       }
@@ -72,10 +73,11 @@ module "blog_alb" {
 
   target_groups = {
     ex-asg = {
-      name_prefix = "blog-"
+      name_prefix      = "blog-"
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
+      create_attachment = false
     }
   }
 
