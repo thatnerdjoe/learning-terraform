@@ -42,6 +42,12 @@ module "blog" {
 
   vpc_zone_identifier   = module.blog_vpc.public_subnets
   security_groups       = [module.blog_sg.security_group_id]
+  traffic_source_attachments = {
+    ex-alb = {
+      traffic_source_identifier = module.blog_alb.target_groups["ex_asg"].arn
+      traffic_source_type = "elbv2"
+    }
+  }
 }
 
 
@@ -58,7 +64,18 @@ module "blog_alb" {
     ex-http = {
       port     = 80
       protocol = "HTTP"
-      target_group_arn = module.blog.autoscaling_group_arn
+      forward = {
+        target_group_key = "ex-instance"
+      }
+    }
+  }
+
+  target_groups = {
+    ex-asg = {
+      name_prefix = "blog-"
+      protocol         = "HTTP"
+      port             = 80
+      target_type      = "instance"
     }
   }
 
