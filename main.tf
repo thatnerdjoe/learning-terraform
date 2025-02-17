@@ -58,7 +58,9 @@ module "blog_alb" {
     ex-http = {
       port     = 80
       protocol = "HTTP"
-      target_group_arn = module.blog.autoscaling_group_arn
+      forward = {
+        target_groups = "ex-alb"
+      }
     }
   }
 
