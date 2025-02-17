@@ -54,27 +54,13 @@ module "blog_alb" {
   subnets         = module.blog_vpc.public_subnets
   security_groups = [module.blog_sg.security_group_id]
 
-  access_logs = {
-    bucket = "my-alb-logs"
-  }
-
   listeners = {
     ex-http = {
       port     = 80
       protocol = "HTTP"
       forward = {
-        target_group_key = "ex-instance"
+        target_id = module.blog.autoscaling_group_arn
       }
-    }
-  }
-
-  target_groups = {
-    ex-instance = {
-      name_prefix      = "blog-"
-      protocol         = "HTTP"
-      port             = 80
-      target_type      = "arn"
-      target_id        = module.blog.autoscaling_group_arn
     }
   }
 
