@@ -44,7 +44,7 @@ module "blog" {
   security_groups       = [module.blog_sg.security_group_id]
   traffic_source_attachments = {
     blog_alb = {
-      traffic_source_identifier = module.blog_alb.target_groups["blog_asg"].arn
+      traffic_source_identifier = module.blog_alb.target_groups["ex-asg"].arn
       traffic_source_type = "elbv2"
     }
   }
